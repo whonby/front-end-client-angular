@@ -1,0 +1,129 @@
+
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-8">  Liste des clients </div>
+      <div class="col-md-4">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Ajouter client
+      </button></div>
+    </div>
+
+  </div>
+  <div class="card-body">
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nom et Prenom</th>
+        <th scope="col">Email</th>
+        <th scope="col">Telephone</th>
+        <th scope="col">Nom utilisateur</th>
+        <th scope="col">Date creation</th>
+        <th scope="col">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let c of listeclient">
+        <th scope="row"></th>
+        <td>{{c.name}}</td>
+        <td>{{c.email}}</td>
+        <td>{{c.telephone}}</td>
+        <td>{{c.username}}</td>
+        <td>{{c.createdAt |date:'shortDate'}}</td>
+        <td>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" (click)="edit(c.id)"><i class="fa fa-pencil-square-o"></i></button>
+          <button class="btn btn-danger" (click)="deleteClient(c.id)"><i class="fa fa-times-circle"></i></button>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<!-- Modal ajoute client-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Formulaire d'ajout de client</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #f='ngForm' (ngSubmit)="addClient()">
+      <div class="modal-body">
+
+          <div class="form-group">
+            <label for="nom">Nom et prnom</label>
+            <input type="text" class="form-control" id="nom" placeholder="Nom et prenom" [(ngModel)]="clients.name" name="name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" placeholder="exemple@gmail.com" [(ngModel)]="clients.email" name="email">
+          </div>
+        <div class="form-group">
+          <label for="username">User name</label>
+          <input type="text" class="form-control" id="username" placeholder="" [(ngModel)]="clients.username" name="username">
+        </div>
+        <div class="form-group">
+          <label for="telephone">Telephone</label>
+          <input type="text" class="form-control" id="telephone" placeholder="+2250520144" [(ngModel)]="clients.telephone" name="telephone">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" [disabled]="!f.valid" class="btn btn-primary">Ajouter</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Formulaire de modification</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #n='ngForm' (ngSubmit)="ClientUpdate()">
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="nom1">Nom et prnom</label>
+            <input type="text" class="form-control" id="nom1" placeholder="Nom et prenom" [(ngModel)]="updateCl.name" name="name">
+          </div>
+          <div class="form-group">
+            <label for="email1">Email</label>
+            <input type="text" class="form-control" id="email1" placeholder="exemple@gmail.com" [(ngModel)]="updateCl.email" name="email">
+          </div>
+          <div class="form-group">
+            <label for="username1">User name</label>
+            <input type="text" class="form-control" id="username1" placeholder="" [(ngModel)]="updateCl.username" name="username">
+          </div>
+          <div class="form-group">
+            <label for="telephone1">Telephone</label>
+            <input type="text" class="form-control" id="telephone1" placeholder="+2250520144" [(ngModel)]="updateCl.telephone" name="telephone">
+
+          </div>
+          <input type="hidden" class="form-control" id="id" placeholder="+2250520144" [(ngModel)]="updateCl.id" name="id">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button type="submit" [disabled]="!n.valid" class="btn btn-primary">Ajouter</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
