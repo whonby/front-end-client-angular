@@ -41,7 +41,7 @@ private updateCl:Client=new Client();
     this.clientService.addClient(this.clients).subscribe(data=>{
       this.getAllClient()
 
-
+     this.clients ={}
       Swal.fire({
         type: 'success',
         title: 'Success',

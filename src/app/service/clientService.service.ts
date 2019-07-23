@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {AppService} from "./appService.service";
 import { Client } from "../client/client";
-
-import {map} from "rxjs/internal/operators";
+import Swal from 'sweetalert2'
+import {map,catchError} from "rxjs/internal/operators";
 import {HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs/index";
+import {Observable, throwError} from "rxjs/index";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,17 @@ export class ClientService {
  }
 
  addClient(client:Client){
-    return this.appService.getResourcePostJava("/api/saveClients/", client,{headers: this.httpHeaders})
+    return this.appService.getResourcePostJava("/api/saveClients/", client,{headers: this.httpHeaders}).pipe(
+      catchError(e=>{
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: e.error.message
+        })
+
+        return throwError(e)
+      })
+    )
  }
 
  detailClient(id){
