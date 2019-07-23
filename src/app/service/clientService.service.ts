@@ -5,6 +5,7 @@ import Swal from 'sweetalert2'
 import {map,catchError} from "rxjs/internal/operators";
 import {HttpHeaders} from "@angular/common/http";
 import {Observable, throwError} from "rxjs/index";
+import { Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import {Observable, throwError} from "rxjs/index";
 export class ClientService {
  // private listeclient;
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
-  constructor(private appService:AppService) { }
+  constructor(private appService:AppService,private router:Router) { }
 
  allClient(){
     return this.appService.getResourceJava("/api/listeClient").pipe(
@@ -36,13 +37,34 @@ export class ClientService {
 
  detailClient(id){
     return this.appService.getResourceJava("/api/detaiclient/"+id).pipe(
-      map(response=>response as Client)
+
+
+      catchError(e=>{
+        //this.router.navigate([""])
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: e.error.message
+        })
+
+        return throwError(e)
+      })
     )
  }
 
  updateClient(client:Client){
    console.log("/api/updateClient/"+client.id)
-    return this.appService.getResourcePutJava("/api/updateClient/"+client.id,client,{headers: this.httpHeaders})
+    return this.appService.getResourcePutJava("/api/updateClient/"+client.id,client,{headers: this.httpHeaders}).pipe(
+      catchError(e=>{
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: e.error.message
+        })
+
+        return throwError(e)
+      })
+    )
  }
 
  deleteClient(id:number){
