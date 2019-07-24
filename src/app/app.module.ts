@@ -6,16 +6,22 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { ClientComponent } from './client/client.component';
+import { PaginationComponent } from './pagination/pagination.component';
+
 import {HttpClientModule} from "@angular/common/http";
 
 import {FormsModule} from "@angular/forms";
+import { LoadingComponent } from './loading/loading.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ClientComponent
+    ClientComponent,
+    PaginationComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

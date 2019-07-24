@@ -1,6 +1,6 @@
 
-<div class="card">
-  <div class="card-header">
+<div class="card  border-primary">
+  <div class="card-header bg-transparent border-primary">
     <div class="row">
       <div class="col-md-8">  Liste des clients </div>
       <div class="col-md-4">
@@ -42,6 +42,10 @@
     </table>
 
   </div>
+  <div class="card-footer bg-transparent border-primary">
+    <pagination-nav *ngIf="paginate" [paginations]="paginate"></pagination-nav>
+  </div>
+
 </div>
 
 <!-- Modal ajoute client-->
@@ -54,30 +58,37 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
+      <ul class="alert alert-danger" *ngIf="errorsAdd?.length>0">
+        <li *ngFor="let errA of errorsAdd">
+          {{errA}}
+        </li>
+      </ul>
       <form #f='ngForm' (ngSubmit)="addClient()">
       <div class="modal-body">
 
-          <div class="form-group">
-            <label for="nom">Nom et prnom</label>
-            <input type="text" class="form-control" id="nom" placeholder="Nom et prenom" [(ngModel)]="clients.name" name="name" required minlength="4" #name="ngModel">
 
-            <div *ngIf="name.invalid && (name.dirty || name.touched)">
-              <span class="text-danger" *ngIf="name.errors.required">Le champ nom et prenom ne doit pas étre vide</span>
-              <span class="text-danger" *ngIf="name.errors.minlength">Ce champ doit etre au minimun 4</span>
-            </div>
 
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" id="email" placeholder="exemple@gmail.com" [(ngModel)]="clients.email" name="email" required email #email="ngModel">
-            <div *ngIf="email.invalid && (email.dirty || email.touched)">
-              <span class="text-danger" *ngIf="email.errors.required">Le champ email ne doit pas étre vide</span>
-              <span class="text-danger" *ngIf="email.errors.email">Veillez renseigne un address email vallable</span>
-
-            </div>
-          </div>
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="nom">Nom et prnom</label>
+          <input type="text" class="form-control" id="nom" placeholder="Nom et prenom" [(ngModel)]="clients.name" name="name" required minlength="4" #name="ngModel">
+
+          <div *ngIf="name.invalid && (name.dirty || name.touched)">
+            <span class="text-danger" *ngIf="name.errors.required">Le champ nom et prenom ne doit pas étre vide</span>
+            <span class="text-danger" *ngIf="name.errors.minlength">Ce champ doit etre au minimun 4</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email" placeholder="exemple@gmail.com" [(ngModel)]="clients.email" name="email" required email #email="ngModel">
+          <div *ngIf="email.invalid && (email.dirty || email.touched)">
+            <span class="text-danger" *ngIf="email.errors.required">Le champ email ne doit pas étre vide</span>
+            <span class="text-danger" *ngIf="email.errors.email">Veillez renseigne un address email vallable</span>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="username">User name</label>
           <input type="text" class="form-control" id="username" placeholder="" [(ngModel)]="clients.username" name="username" required minlength="2" maxlength="10"  #username="ngModel">
           <div *ngIf="username.invalid && (username.dirty || username.touched)">
             <span class="text-danger" *ngIf="username.errors.required">Le champ username ne doit pas étre vide</span>
@@ -87,17 +98,23 @@
         </div>
         <div class="form-group">
           <label for="telephone">Telephone</label>
-          <input type="text" class="form-control" id="telephone" placeholder="+2250520144" [(ngModel)]="clients.telephone" required minlength="4"  #telephone="ngModel" name="telephone">
+          <input type="text" class="form-control" id="telephone" placeholder="+2250520144" [(ngModel)]="clients.telephone" name="telephone" required #telephone="ngModel">
           <div *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)">
             <span class="text-danger" *ngIf="telephone.errors.required">Le champ telephone ne doit pas étre vide</span>
             <span class="text-danger" *ngIf="telephone.errors.minlength">Ce champ doit etre au minimun 4</span>
           </div>
+
         </div>
 
+
+
+
       </div>
+
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="submit" [disabled]="!f.valid" class="btn btn-primary">Ajouter</button>
+        <button type="submit" [disabled]="!f.form.valid" class="btn btn-primary">Ajouter</button>
       </div>
       </form>
     </div>
@@ -116,24 +133,48 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <ul class="alert alert-danger" *ngIf="errorsupdate?.length>0">
+        <li *ngFor="let errU of errorsupdate">
+          {{errU}}
+        </li>
+      </ul>
       <form #n='ngForm' (ngSubmit)="ClientUpdate()">
         <div class="modal-body">
 
           <div class="form-group">
             <label for="nom1">Nom et prnom</label>
-            <input type="text" class="form-control" id="nom1" placeholder="Nom et prenom" [(ngModel)]="updateCl.name" name="name">
+            <input type="text" class="form-control" id="nom1" placeholder="Nom et prenom" [(ngModel)]="updateCl.name" name="name" required minlength="4" #name="ngModel">
+
+            <div *ngIf="name.invalid && (name.dirty || name.touched)">
+              <span class="text-danger" *ngIf="name.errors.required">Le champ nom et prenom ne doit pas étre vide</span>
+              <span class="text-danger" *ngIf="name.errors.minlength">Ce champ doit etre au minimun 4</span>
+            </div>
           </div>
           <div class="form-group">
             <label for="email1">Email</label>
-            <input type="text" class="form-control" id="email1" placeholder="exemple@gmail.com" [(ngModel)]="updateCl.email" name="email">
+            <input type="text" class="form-control" id="email1" placeholder="exemple@gmail.com" [(ngModel)]="updateCl.email" name="email" required email #email="ngModel">
+            <div *ngIf="email.invalid && (email.dirty || email.touched)">
+              <span class="text-danger" *ngIf="email.errors.required">Le champ email ne doit pas étre vide</span>
+              <span class="text-danger" *ngIf="email.errors.email">Veillez renseigne un address email vallable</span>
+
+            </div>
           </div>
           <div class="form-group">
             <label for="username1">User name</label>
-            <input type="text" class="form-control" id="username1" placeholder="" [(ngModel)]="updateCl.username" name="username">
+            <input type="text" class="form-control" id="username1" placeholder="" [(ngModel)]="updateCl.username" name="username" required minlength="2" maxlength="10"  #username="ngModel">
+            <div *ngIf="username.invalid && (username.dirty || username.touched)">
+              <span class="text-danger" *ngIf="username.errors.required">Le champ username ne doit pas étre vide</span>
+              <span class="text-danger" *ngIf="username.errors.minlength">Ce champ doit etre au minimun 2</span>
+              <span class="text-danger" *ngIf="username.errors.maxlength">Ce champ doit etre au maximun 10</span>
+            </div>
           </div>
           <div class="form-group">
             <label for="telephone1">Telephone</label>
-            <input type="text" class="form-control" id="telephone1" placeholder="+2250520144" [(ngModel)]="updateCl.telephone" name="telephone">
+            <input type="text" class="form-control" id="telephone1" placeholder="+2250520144" [(ngModel)]="updateCl.telephone" name="telephone" required #telephone="ngModel">
+            <div *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)">
+              <span class="text-danger" *ngIf="telephone.errors.required">Le champ telephone ne doit pas étre vide</span>
+              <span class="text-danger" *ngIf="telephone.errors.minlength">Ce champ doit etre au minimun 4</span>
+            </div>
 
           </div>
           <input type="hidden" class="form-control" id="id" placeholder="+2250520144" [(ngModel)]="updateCl.id" name="id">

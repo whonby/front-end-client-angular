@@ -1,0 +1,39 @@
+<nav *ngIf="paginate?.length>0" aria-label="Page navigation example">
+  <ul class="pagination">
+
+    <li class="page-item" *ngIf="paginations.number>0">
+      <a  class="page-link" [routerLink]="['/clients/page',paginations.number-1]">
+        &laquo;
+      </a>
+    </li>
+
+
+    <li [ngClass]="paginations.first?' disabled page-item':'page-item' " >
+      <a  class="page-link" [routerLink]="['/clients/page',0]">
+        Premier
+      </a>
+    </li>
+
+
+
+    <li class="page-item" *ngFor="let page of paginate" [ngClass]="page-1==paginations.number?' active':'' ">
+      <span *ngIf="page-1==paginations.number"></span>
+      <a  class="page-link" [routerLink]="['/clients/page',page-1]">{{page}}</a>
+    </li>
+
+    <li [ngClass]="paginations.last?' disabled page-item':'page-item' " >
+      <a  class="page-link" [routerLink]="['/clients/page',paginations.totalPages-1]">
+        Dernier
+      </a>
+    </li>
+
+
+    <li class="page-item" *ngIf="paginations.number<paginations.totalPages-1">
+
+      <a  class="page-link" [routerLink]="['/clients/page',paginations.number+1]">
+        &raquo;
+      </a>
+    </li>
+
+  </ul>
+</nav>
