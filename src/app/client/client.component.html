@@ -59,13 +59,17 @@
         </button>
       </div>
 
-      <ul class="alert alert-danger" *ngIf="errorsAdd?.length>0">
-        <li *ngFor="let errA of errorsAdd">
-          {{errA}}
-        </li>
-      </ul>
+
       <form #f='ngForm' (ngSubmit)="addClient()">
       <div class="modal-body">
+        <div class="alert alert-danger alert-dismissible fade in"  *ngIf="errorsAdd?.length>0">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <ul>
+            <li *ngFor="let errA of errorsAdd">
+              {{errA}}
+            </li>
+          </ul>
+        </div>
 
 
 
@@ -96,13 +100,23 @@
             <span class="text-danger" *ngIf="username.errors.maxlength">Ce champ doit etre au maximun 10</span>
           </div>
         </div>
+
         <div class="form-group">
           <label for="telephone">Telephone</label>
+
           <input type="text" class="form-control" id="telephone" placeholder="+2250520144" [(ngModel)]="clients.telephone" name="telephone" required #telephone="ngModel">
           <div *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)">
             <span class="text-danger" *ngIf="telephone.errors.required">Le champ telephone ne doit pas étre vide</span>
             <span class="text-danger" *ngIf="telephone.errors.minlength">Ce champ doit etre au minimun 4</span>
           </div>
+        </div>
+
+        <div class="form-group ">
+
+          <label >Date <br> </label>
+          <input type="date" class="form-control" [(ngModel)]="clients.createdAt" name="createdAt" required #createdAt="ngModel" style="display: inherit; width:300px">
+          <!--<mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #myDatepicker></mat-datepicker>-->
 
         </div>
 
@@ -133,14 +147,17 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <ul class="alert alert-danger" *ngIf="errorsupdate?.length>0">
-        <li *ngFor="let errU of errorsupdate">
-          {{errU}}
-        </li>
-      </ul>
+
       <form #n='ngForm' (ngSubmit)="ClientUpdate()">
         <div class="modal-body">
-
+          <div class="alert alert-danger alert-dismissible fade in"  *ngIf="errorsupdate?.length>0">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <ul class="alert alert-danger" >
+              <li *ngFor="let errU of errorsupdate">
+                {{errU}}
+              </li>
+            </ul>
+          </div>
           <div class="form-group">
             <label for="nom1">Nom et prnom</label>
             <input type="text" class="form-control" id="nom1" placeholder="Nom et prenom" [(ngModel)]="updateCl.name" name="name" required minlength="4" #name="ngModel">

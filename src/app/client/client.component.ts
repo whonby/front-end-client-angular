@@ -54,7 +54,7 @@
     //Ajout de client
 
     public addClient(){
-
+       console.log(this.clients)
       this.clientService.addClient(this.clients).subscribe(data=>{
         this.getAllClient()
          console.log(data)
